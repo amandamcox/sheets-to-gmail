@@ -1,0 +1,241 @@
+<html>
+  <head></head>
+  <body>
+    <?
+      switch (programStatus) {
+        case 'On Track':
+        case 'Delivered':
+          statusColor = 'green';
+          statusText = 'white';
+          break;
+        case 'Keep Watch':
+          statusColor = 'yellow';
+          statusText = 'black';
+          break;
+        case 'Blocked':
+          statusColor = 'red';
+          statusText = 'white';
+          break;
+        default:
+          statusColor = 'gray';
+          statusText = 'white'
+      }
+    ?>
+    <table style="font-size: 14px; width:100%; border: 1px #000000 solid; border-collapse: collapse;">
+      <tr style="background-color: #000000; height: 40px; color:#ffffff;">
+        <td rowspan="2" style="padding-left: 20px; width: 30%;">
+          <img style="max-height: 40px; width: auto;" src="<?= logoUrl ?>">
+        </td>
+        <td style="text-align: right; font-weight: bold; font-size: 18px; padding: 10px 20px 0px 0px; width:70%;">
+          PROGRAM STATUS UPDATE
+        </td>
+      </tr>
+      <tr style="background-color: #000000; height: 40px; color:#ffffff;">
+        <td style="text-align: right; font-size: 14px; padding: 0px 20px 10px 0px; width:70%;">
+          <?= getDate() ?>
+        </td>
+      </tr>
+      <tr style="height: 10px; background-color: <?= statusColor ?>">
+        <td colspan="2"></td>
+      </tr>
+
+      <!-- Start of program section -->
+
+      <tr style="background-color: #f1f3f4;">
+        <td colspan="2" style="font-size: 24px; font-weight: bold; padding: 10px; padding-top: 20px;">
+          <?= programName ?>
+          <? if (programLink) { ?>
+            <span style="font-size: 14px;"> (<a href="<?= programLink ?>">program page</a>)</span>
+          <? } ?>
+        </td>
+      </tr>
+      <tr style="background-color: #f1f3f4;">
+        <td style="font-weight: bold; padding: 10px; vertical-align:top;">
+          Program Executive Summary
+        </td>
+        <td style="padding: 10px; vertical-align:top;">
+          <?= execSummary ?>
+        </td>
+      </tr>
+      <tr style="background-color: #f1f3f4;">
+        <td style="font-weight: bold; padding: 10px; vertical-align:top;">
+          Program Stage
+        </td>
+        <td style="padding: 10px; vertical-align:top;">
+          <?= programStage ?>
+        </td>
+      </tr>
+      <tr style="background-color: #f1f3f4;">
+        <td style="font-weight: bold; padding: 10px; vertical-align:top;">
+          Overall Program Status
+        </td>
+        <td style="padding: 10px; vertical-align:top;">
+          <span style="border-radius: 25px; color: <?= statusText ?>; font-weight: bold; padding: 5px 20px 5px 20px; background-color: <?= statusColor ?>;">
+            <?= programStatus ?>
+          </span>
+        </td>
+      </tr>
+      <tr style="background-color: #f1f3f4;">
+        <td style="font-weight: bold; padding: 10px; vertical-align:top;">
+          Status Justification
+        </td>
+        <td style="padding: 10px; vertical-align:top;">
+          <?= programJust ?>
+        </td>
+      </tr>
+      <? if (programStatus == 'Keep Watch' || programStatus == 'Blocked' || programStatus == 'On Hold') { ?>
+        <tr style="background-color: #f1f3f4;">
+          <td style="font-weight: bold; padding: 10px; vertical-align:top;">
+            Path To Green
+          </td>
+          <td style="padding: 10px; vertical-align:top;">
+            <ul style="margin:0; padding:0;">
+            <? pathToGreen.forEach(function(bullet) {
+                if (bullet != '') { ?>
+                  <li><?= bullet ?></li>
+                <? } ?>
+            <? }); ?>
+            </ul>
+          </td>
+        </tr>
+      <? } ?>
+      <? if (targetDate) { ?>
+        <tr style="background-color: #f1f3f4;">
+          <td style="font-weight: bold; padding: 10px; vertical-align:top;">
+            Target Launch Date
+          </td>
+          <td style="padding: 10px; vertical-align:top;">
+            <?= targetDate ?>
+          </td>
+        </tr>
+      <? } ?>
+      <? if (imageTitle) { ?>
+        <tr style="background-color: #f1f3f4;">
+          <td style="font-weight: bold; padding: 10px; vertical-align:top;">
+            <?= imageTitle ?>
+          </td>
+          <td style="padding: 10px; vertical-align:top;">
+            <img style="max-height: 300px; max-width: 100%;" src="cid:userimage">
+          </td>
+        </tr>
+      <? } ?>
+
+      <!-- End of program section -->
+
+      <tr style="background-color: #000000; height: 40px; color: #ffffff; font-size: 18px; font-weight: bold;">
+        <td colspan="2" style="padding: 10px 0px 10px 20px;">
+          PROJECT WORKSTREAM UPDATES
+        </td>
+      </tr>
+
+      <!-- Start of project sections -->
+
+      <? projectValues.forEach(function (eachProject) { ?>
+      <?
+      switch (eachProject.projectStatus) {
+        case 'On Track':
+        case 'Delivered':
+          projectStatusColor = 'green';
+          projectStatusText = 'white';
+          break;
+        case 'Keep Watch':
+          projectStatusColor = 'yellow';
+          projectStatusText = 'black';
+          break;
+        case 'Blocked':
+          projectStatusColor = 'red';
+          projectStatusText = 'white';
+          break;
+        default:
+          projectStatusColor = 'gray';
+          projectStatusText = 'white'
+      }
+    ?>
+        <tr style="height: 2px; background-color: <?= statusColor ?>;">
+          <td colspan="2"></td>
+        </tr>
+        <tr>
+          <td colspan="2" style="font-size: 24px; font-weight: bold; padding: 10px; padding-top: 20px;">
+            <?= eachProject.projectName ?>
+            <? if (eachProject.projectLink) { ?>
+              <span style="font-size: 14px;"> (<a href="<?= eachProject.projectLink ?>">project page</a>)</span>
+            <? } ?>
+          </td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold; padding: 10px; vertical-align:top;">
+            Project Status
+          </td>
+          <td style="padding: 10px; vertical-align:top;">
+            <span style="border-radius: 25px; color: <?= projectStatusText ?>; font-weight: bold; padding: 5px 20px; background-color: <?= projectStatusColor ?>;">
+              <?= eachProject.projectStatus ?>
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold; padding: 10px; vertical-align:top;">
+            Status Justification
+          </td>
+          <td style="padding: 10px; vertical-align:top;">
+            <?= eachProject.statusJust ?>
+          </td>
+        </tr>
+        <? if (eachProject.projectStatus == 'Keep Watch' || eachProject.projectStatus == 'Blocked' || eachProject.projectStatus == 'On Hold') { ?>
+          <tr>
+            <td style="font-weight: bold; padding: 10px; vertical-align:top;">
+              Path to Green
+            </td>
+            <td style="padding: 10px; vertical-align:top;">
+              <ul style="margin:0; padding:0;">
+              <? eachProject.pathToGreen.forEach(function (bullet) { ?>
+                <? if (bullet) { ?>
+                  <li><?= bullet ?></li>
+                <? } ?>
+              <? }); ?>
+              </ul>
+            </td>
+          </tr>
+        <? } ?>
+        <tr>
+          <td style="font-weight: bold; padding: 10px; vertical-align:top;">
+            Recent Activities
+          </td>
+          <td style="padding: 10px; vertical-align:top;">
+            <ul style="margin:0; padding:0;">
+            <? eachProject.projectActs.forEach(function(bullet) { ?>
+              <? if (bullet) { ?>
+                <li><?= bullet ?></li>
+              <? } ?>
+            <? }); ?>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold; padding: 10px; vertical-align:top; padding-bottom: 30px; ">
+            Upcoming Milestones
+          </td>
+          <td style="padding: 10px; vertical-align:top; padding-bottom: 30px; ">
+            <ul style="margin:0; padding:0;">
+            <? eachProject.projectMiles.forEach(function (bullet) { ?>
+              <? if (bullet) { ?>
+                <li><?= bullet ?></li>
+              <? } ?>
+            <? }); ?>
+            </ul>
+          </td>
+        </tr>
+      <? }); ?>
+
+      <!-- End of project sections -->
+
+      <tr style="height: 10px; padding-top: 50px; background-color: <?= statusColor ?>;">
+        <td colspan="2"></td>
+      </tr>
+      <tr>
+        <td colspan="2" style="background-color: #f3f3f3; height: 50px; font-style: italic; font-size: 12px; padding: 10px; text-align: center;">
+          <a style="color:#000000;" href="<?= footerLink ?>"><?= footerText ?></a>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
